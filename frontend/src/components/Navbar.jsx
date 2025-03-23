@@ -8,7 +8,9 @@ const Navbar = () => {
 
     return (
         <div className='flex items-center justify-between py-5 font-medium' >
+            <Link to='/'>
             <img src={assets.logo} className='w-36' />
+            </Link>
 
             <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
                 <NavLink to='/' className='flex flex-col items-center gap-1' >
@@ -55,7 +57,7 @@ const Navbar = () => {
             </div>
 
             {/* side menue for smaller screens */}
-            
+
             <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`} >
                 <div className='flex flex-col text-gray-600' >
                     <div onClick={() => setVisible(false)} className='flex items-center gap-4 p-3 cursor-pointer' >
