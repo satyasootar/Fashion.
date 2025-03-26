@@ -9,6 +9,7 @@ const Collection = () => {
     const [filterProducts, setFilterProducts] = useState([])
     const [category, setCategory] = useState([])
     const [subCategory, setSubCategory] = useState([])
+    const [sortType, setSortType] = useState("relevent")
 
 
     const toggleCategory = (e) => {
@@ -43,6 +44,18 @@ const Collection = () => {
 
     const sortProduct = () => {
         let fpCopy = filterProducts.slice()
+        switch (sortType) {
+            case "lowhigh":
+                setFilterProducts(fpCopy.sort((a, b) => (a.price - b.price)))
+                break;
+            case "highlow":
+                setFilterProducts(fpCopy.sort((a, b) => (b.price - a.price)))
+                break;
+            default:
+                applyFilter()
+                break;
+        }
+
     }
 
     useEffect(() => {
@@ -51,8 +64,8 @@ const Collection = () => {
 
 
     useEffect(() => {
-        console.log(subCategory);
-    }, [subCategory])
+        sortProduct()
+    }, [sortType])
 
     return (
         <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t' >
@@ -104,10 +117,10 @@ const Collection = () => {
                 <div className='flex justify-between text-base sm:text-2xl mb-4' >
                     <Title text1={"ALL"} text2={" COLLECTIONS"} />
                     {/* Prodcut Sort */}
-                    <select className='border-2 border-gray-300 text-sm px-2' >
+                    <select onClick={(e) => setSortType(e.target.value)} className='border-2 border-gray-300 text-sm px-2' >
                         <option value="relevent">Sort by: Relevent</option>
-                        <option value="low-high">Sort by: Low-High</option>
-                        <option value="high-low">Sort by: High-Low</option>
+                        <option value="lowhigh">Sort by: Low-High</option>
+                        <option value="highlow">Sort by: High-Low</option>
                     </select>
                 </div>
                 {/* Map Products */}
