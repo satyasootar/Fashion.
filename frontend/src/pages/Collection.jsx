@@ -4,11 +4,9 @@ import { assets } from '../assets/assets';
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
 const Collection = () => {
-    const { products, search, showSearch } = useContext(ShopContext);
-    console.log("search: ", search);
+    const { products, search, showSearch } = useContext(ShopContext);   
     const [showFilter, setShowFilter] = useState();
     const [filterProducts, setFilterProducts] = useState([])
-    console.log("filterProducts: ", filterProducts);
     const [category, setCategory] = useState([])
     const [subCategory, setSubCategory] = useState([])
     const [sortType, setSortType] = useState("relevent")
