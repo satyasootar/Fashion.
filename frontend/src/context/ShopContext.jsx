@@ -33,7 +33,7 @@ const ShopContextProvider = ({ children }) => {
             cartData[itemId][size] = 1
         }
         setCartItems(cartData)
-        toast.success("Sucessfully Added")
+
     }
 
     const getCartCount = () => {
@@ -47,10 +47,17 @@ const ShopContextProvider = ({ children }) => {
         return totalCount;
     };
 
+    const updateQuantity = (itemId, size, quantity) => {
+        let cartData = structuredClone(cartItems);
+        cartData[itemId][size] = quantity;
+        setCartItems(cartData)
+    }
+
     const value = {
         products, delivery_fee, currency,
-        search, setSearch, showSearch, setShowSearch, 
-        cartItems, addToCart, getCartCount
+        search, setSearch, showSearch, setShowSearch,
+        cartItems, addToCart, getCartCount,
+        updateQuantity
     }
 
 
