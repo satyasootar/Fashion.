@@ -2,9 +2,10 @@ import { useContext, useEffect, useState } from "react"
 import { ShopContext } from "../context/ShopContext"
 import Title from '../components/Title'
 import { assets } from "../assets/assets"
+import CartTotal from "../components/CartTotal"
 
 const Cart = () => {
-    const { products, cartItems, currency, updateQuantity } = useContext(ShopContext)
+    const { products, cartItems, currency, updateQuantity, navigate } = useContext(ShopContext)
     const [cartData, setCartData] = useState([])
     console.log("cartData: ", cartData);
 
@@ -52,12 +53,20 @@ const Cart = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <input className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1" type="number" min={1} defaultValue={item.quantity} />
-                                <img onClick={()=>updateQuantity(item._id, item.size, 0)} className="w-4 m-4 sm:w-5 cursor-pointer" src={assets.bin_icon} alt="" />
+                                <input onChange={(e) => e.target.value === '' || e.target.value === '0' ? null : updateQuantity(item._id, item.size, Number(e.target.value))} className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1" type="number" min={1} defaultValue={item.quantity} />
+                                <img onClick={() => updateQuantity(item._id, item.size, 0)} className="w-4 m-4 sm:w-5 cursor-pointer" src={assets.bin_icon} alt="" />
                             </div>
                         )
                     }, [])
                 }
+            </div>
+            <div className="flex justify-end my-20" >
+                <div className="w-full sm:w-[450px]" >
+                    <CartTotal />
+                    <div className="w-full text-end" >
+                        <button onClick={() => navigate('/placeOrder')} className="bg-black my-4 px-8 py-3 text-white text-sm border cursor-pointer hover:text-black hover:bg-white hover:border-1" >PROCEED TO CHECKOUT</button>
+                    </div>
+                </div>
             </div>
         </div>
     )
