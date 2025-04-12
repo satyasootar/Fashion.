@@ -3,7 +3,7 @@ import { ShopContext } from '../context/ShopContext'
 import Title from '../components/Title'
 
 const Orders = () => {
-    const { products, currency } = useContext(ShopContext)
+    const { products, currency, } = useContext(ShopContext)
     return (
         <div className='borber-t pt-16' >
             <div className='text-2xl' >
