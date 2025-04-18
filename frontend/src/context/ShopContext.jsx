@@ -10,9 +10,8 @@ const ShopContextProvider = ({ children }) => {
     const currency = '$';
     const delivery_fee = 10;
     const backendUrl = import.meta.env.VITE_BACKEND_URL
-    console.log("backendUrl: ", backendUrl);
+    const [token, setToken] = useState("")
     const [products, setProducts] = useState([])
-    console.log("products: ", products);
     const [search, setSearch] = useState("")
     const [showSearch, setShowSearch] = useState(false)
     const [cartItems, setCartItems] = useState({});
@@ -79,9 +78,7 @@ const ShopContextProvider = ({ children }) => {
 
     const getProductsData = async () => {
         try {
-
             const res = await axios.get(`${backendUrl}/api/product/list`);
-            console.log("res: ", res);
             if (res.data.success) {
                 setProducts(res.data.product)
             } else {
@@ -102,7 +99,7 @@ const ShopContextProvider = ({ children }) => {
         search, setSearch, showSearch, setShowSearch,
         cartItems, addToCart, getCartCount,
         updateQuantity, getCartAmount,
-        navigate, backendUrl
+        navigate, backendUrl, setToken, token
 
     }
 
