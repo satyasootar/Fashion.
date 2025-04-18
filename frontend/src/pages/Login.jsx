@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const Login = () => {
 
-  const [currentState, setCurrentState] = useState("Signup")
+  const [currentState, setCurrentState] = useState("Login")
   const { token, setToken, navigate, backendUrl } = useContext(ShopContext);
+  console.log("token: ", token);
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
@@ -14,32 +15,27 @@ const Login = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault()
     try {
+      //--------- Sign Up -------------
       if (currentState === 'Signup') {
         const res = await axios.post(`${backendUrl}/api/user/register`, { name, email, password })
-        console.log("res: ", res.data);
-        console.log("success: ", res.data?.success);
 
-        if (res?.data?.success === true) {
+        if (res?.data?.success) {
           setToken(res.data.token)
-          console.log("res.data.token: ", res.data.token);
           localStorage.setItem("token", res.data.token)
-          toast.success("User created")
-          setEmail("")
-          setPassword("")
-          setName("")
+          toast.success(res.data.message)
+          formCleanUp()
         } else {
           toast.error(res.data.message)
         }
       } else {
+        // ------ log in -------
         const res = await axios.post(`${backendUrl}/api/user/login`, { email, password })
         console.log("res: ", res);
-        if (res?.data.success === true) {
+        if (res?.data.success) {
           setToken(res.data.token)
           localStorage.setItem("token", res.data.token)
           toast.success(res.data.message)
-          setEmail("")
-          setPassword("")
-          setName("")
+          formCleanUp()
         } else {
           toast.error(res.data.message)
         }
@@ -47,9 +43,20 @@ const Login = () => {
     } catch (error) {
       console.log("error: ", error);
       console.log(error.message);
-
     }
   }
+
+  const formCleanUp = () => {
+    setEmail("")
+    setPassword("")
+    setName("")
+  }
+
+  useEffect(() => {
+    if (token) {
+      navigate("/")
+    }
+  }, [token])
 
   return (
     <form onSubmit={onSubmitHandler} className='flex flex-col item-center w-[90%] sm:max-w-96 m-auto mt-14 gap-4 text-gray-800 ' >

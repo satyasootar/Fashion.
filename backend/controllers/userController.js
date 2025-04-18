@@ -15,7 +15,7 @@ const loginUser = async (req, res) => {
         const user = await userModel.findOne({ email });
         if (!user) {
             return res.json({
-                success: "false",
+                success: false,
                 message: "User does not exist"
             })
         }
@@ -23,7 +23,7 @@ const loginUser = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch) {
             return res.json({
-                success: "false",
+                success: false,
                 message: "Incorrect passsword"
             })
         }
@@ -55,7 +55,7 @@ const registerUser = async (req, res) => {
 
         if (exist) {
             return res.json({
-                success: "false",
+                success: false,
                 message: "User Already exist"
             })
         }
@@ -63,13 +63,13 @@ const registerUser = async (req, res) => {
         // Validating email format and strong password
         if (!validator.isEmail(email)) {
             return res.json({
-                success: "false",
+                success: false,
                 message: "Please enter a valid email"
             })
         }
         if (password.length < 8) {
             return res.json({
-                success: "false",
+                success: false,
                 message: "Please enter a password of more then 7 characters"
             })
         }
@@ -89,7 +89,9 @@ const registerUser = async (req, res) => {
         console.log("token: ", token);
         res.json({
             success: true,
+            message:"User created sucessfully",
             token
+
         })
 
     } catch (error) {
@@ -122,7 +124,7 @@ const adminLogin = (req, res) => {
         res.json({
             success: false,
             message: error.message
-        }) 
+        })
     }
 }
 

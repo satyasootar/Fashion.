@@ -93,11 +93,16 @@ const ShopContextProvider = ({ children }) => {
         getProductsData()
     }, [])
 
+    useEffect(() => {
+        if (!token && localStorage.getItem("token")) {
+            setToken(localStorage.getItem("token"))
+        }
+    }, [])
 
     const value = {
         products, delivery_fee, currency,
         search, setSearch, showSearch, setShowSearch,
-        cartItems, addToCart, getCartCount,
+        cartItems, setCartItems, addToCart, getCartCount,
         updateQuantity, getCartAmount,
         navigate, backendUrl, setToken, token
 
