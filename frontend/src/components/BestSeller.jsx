@@ -6,13 +6,12 @@ import ProductItem from './ProductItem';
 export const BestSeller = () => {
     const { products } = useContext(ShopContext)
     const [bestSeller, setBestseller] = useState([])
-    console.log("bestSeller: ", bestSeller);
 
 
     useEffect(() => {
-        const bestProduct = products.filter((ele) => ele.bestseller)
+        const bestProduct = products.filter((ele) => ele.bestSeller)
         setBestseller(bestProduct.slice(0, 5))
-    }, [])
+    }, [products])
     return (
         <div className='my-10'>
             <div className='text-center text-3xl py-8' >

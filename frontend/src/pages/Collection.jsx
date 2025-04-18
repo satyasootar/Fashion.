@@ -4,7 +4,7 @@ import { assets } from '../assets/assets';
 import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
 const Collection = () => {
-    const { products, search, showSearch } = useContext(ShopContext);   
+    const { products, search, showSearch } = useContext(ShopContext);
     const [showFilter, setShowFilter] = useState();
     const [filterProducts, setFilterProducts] = useState([])
     const [category, setCategory] = useState([])
@@ -64,12 +64,12 @@ const Collection = () => {
 
     useEffect(() => {
         applyFilter()
-    }, [category, subCategory, search, showSearch])
+    }, [category, subCategory, search, showSearch, products])
 
 
     useEffect(() => {
         sortProduct()
-    }, [sortType])
+    }, [sortType, products])
 
     return (
         <div className='flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t' >
