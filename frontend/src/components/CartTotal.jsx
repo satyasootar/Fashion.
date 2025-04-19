@@ -5,7 +5,6 @@ import Title from './Title';
 
 const CartTotal = () => {
     const { currency, delivery_fee, getCartAmount } = useContext(ShopContext);
-    console.log("getCartAmount: ", getCartAmount());
     return (
         <div className='w-full '>
             <div className='text-2xl' >
