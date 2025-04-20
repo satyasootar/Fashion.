@@ -64,7 +64,14 @@ const PlaceOrder = () => {
                         toast.error(error.message)
                     }
                     break;
-
+                case "stripe":
+                    const responseStripe = await axios.post(backendUrl + "/api/order/stripe", orderData, { headers: { token } })
+                    if (responseStripe.data.success) {
+                        const { session_url } = responseStripe.data
+                        window.location.replace(session_url)
+                    } else {
+                        toast.error(responseStripe.data.message)
+                    }
                 default:
                     break
             }
@@ -97,7 +104,7 @@ const PlaceOrder = () => {
                     <input required onChange={onCangeHandler} value={formData.zipcode} name='zipcode' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' type="number" placeholder='Zipcode' />
                     <input required onChange={onCangeHandler} value={formData.country} name='country' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' type="text" placeholder='Country' />
                 </div>
-                <input required onChange={onCangeHandler} value={formData.border} name='border' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' type="number" placeholder='Phone' />
+                <input required onChange={onCangeHandler} value={formData.border} name='phone' className='border border-gray-300 rounded py-1.5 px-3.5 w-full' type="number" placeholder='Phone' />
             </div>
             {/* -------- Right Side ---------- */}
             <div className='mt-8' >
