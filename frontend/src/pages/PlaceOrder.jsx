@@ -56,7 +56,7 @@ const PlaceOrder = () => {
                 //API call for cod
                 case "cod":
                     const res = await axios.post(backendUrl + "/api/order/place", orderData, { headers: { token } })
-                    console.log("res: ", res);
+                    // console.log("res: ", res);
                     if (res.data.success) {
                         setCartItems({})
                         navigate("/orders")

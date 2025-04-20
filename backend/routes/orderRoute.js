@@ -13,6 +13,6 @@ orderRoute.post("/status", adminAuth, updateStatus)
 orderRoute.post("/place", authUsers, placeOrder)
 orderRoute.post("/stripe", authUsers, placeOrderWithStripe)
 orderRoute.post("razorpay", placeOrderWithRazorPay)
-orderRoute.post("userorder",authUsers, userOrder)
+orderRoute.post("/userorders",authUsers, userOrder)
 
 export default orderRoute
