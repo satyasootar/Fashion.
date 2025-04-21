@@ -44,6 +44,7 @@ const ShopContextProvider = ({ children }) => {
             try {
                 const res = await axios.post(backendUrl + "/api/cart/add", { itemId, size }, { headers: { token } })
                 console.log("res: ", res.data);
+                toast.success("Added to cart")
             } catch (error) {
                 console.log("error: ", error);
                 toast.error(error.message)

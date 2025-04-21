@@ -2,42 +2,143 @@ import React from 'react'
 import Title from '../components/Title'
 import { assets } from '../assets/assets'
 import NewsLetterBox from '../components/NewsLetterBox'
+import { motion } from 'framer-motion'
+import { Award, ShoppingCart, Headphones } from 'lucide-react'
 
 const About = () => {
+    const fadeIn = {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1 },
+    }
+    
+    const staggerChildren = {
+        visible: { transition: { staggerChildren: 0.2 } },
+    }
+
     return (
-        <div>
-            <div className='text-2xl text-center pt-8 border-t' >
-                <Title text1={"ABOUT"} text2={" US"} />
-            </div>
-            <div className='my-10 flex flex-col md:flex-row gap-16' >
-                <img className='w-full md:max-w-[450px]' src={assets.about_img} alt="" />
-                <div className='flex flex-col justify-center gap-6 md:w-2/4 0 text-gray-600' >
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe quasi, illo quibusdam cum porro inventore blanditiis quam maxime! Sit dolorem fugit aspernatur sint? Vel ut dolorum aspernatur reprehenderit, perspiciatis sint</p>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat voluptate minima enim consequuntur voluptatem eligendi, veritatis animi iste cum, natus quo?</p>
-                    <b className='text-gray-800' >Our Mission</b>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe earum labore repudiandae, cumque reprehenderit, omnis ducimus numquam laboriosam dignissimos doloribus possimus. Accusamus natus modi vitae minima porro, mollitia commodi odio quas nihil.</p>
-                </div>
-            </div>
+        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+            {/* Hero Section */}
+            <motion.div 
+                initial="hidden"
+                animate="visible"
+                variants={staggerChildren}
+                className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
+            >
+                <motion.div 
+                    variants={fadeIn}
+                    className="text-center mb-16"
+                >
+                    <Title text1="ABOUT" text2="US" />
+                </motion.div>
 
-            <div className='text-xl py-4' >
-                <Title text1={"WHY"} text2={"CHOOSE US"} />
-            </div>
+                {/* Main Content */}
+                <motion.div 
+                    variants={fadeIn}
+                    className="flex flex-col lg:flex-row gap-12 items-center mb-24"
+                >
+                    <motion.img 
+                        initial={{ x: -50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.8 }}
+                        className="w-full lg:max-w-[600px] rounded-xl shadow-lg dark:shadow-gray-800/50"
+                        src={assets.about_img} 
+                        alt="About us" 
+                    />
 
-            <div className='flex flex-col md:flex-row text-sm mb-20' >
-                <div className='border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5' >
-                    <b>Quality Assurance:</b>
-                    <p className='text-gray-600' >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam ducimus architecto, rerum, vitae maiores dolorum sequi totam repudiandae in veniam cumque vero repellat autem consequuntur hic accusamus explicabo ipsum facilis.</p>
-                </div>
-                <div className='border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5' >
-                    <b>Convenience:</b>
-                    <p className='text-gray-600' >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam ducimus architecto, rerum, vitae maiores dolorum sequi totam repudiandae in veniam cumque vero repellat autem consequuntur hic accusamus explicabo ipsum facilis.</p>
-                </div>
-                <div className='border px-10 md:px-16 py-8 sm:py-20 flex flex-col gap-5' >
-                    <b>Exceptional Customer service:</b>
-                    <p className='text-gray-600' >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam ducimus architecto, rerum, vitae maiores dolorum sequi totam repudiandae in veniam cumque vero repellat autem consequuntur hic accusamus explicabo ipsum facilis.</p>
-                </div>
-            </div>
-            <NewsLetterBox />
+                    <motion.div 
+                        initial={{ x: 50, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.8 }}
+                        className="flex-1 space-y-6 dark:text-gray-300"
+                    >
+                        <p className="text-lg leading-relaxed">
+                            At the heart of our brand lies a passion for redefining fashion. We believe clothing 
+                            should empower confidence while maintaining ultimate comfort.
+                        </p>
+                        
+                        <p className="text-lg leading-relaxed">
+                            Founded in 2023, we've curated collections that blend timeless elegance with 
+                            contemporary trends, ensuring every piece tells a story.
+                        </p>
+
+                        <div className="space-y-4">
+                            <h3 className="text-2xl font-playfair font-semibold dark:text-white">
+                                Our Mission
+                            </h3>
+                            <p className="text-lg leading-relaxed">
+                                To revolutionize your wardrobe with sustainable, ethically-produced apparel 
+                                that doesn't compromise on style or quality. We're committed to creating 
+                                fashion that feels good and does good.
+                            </p>
+                        </div>
+                    </motion.div>
+                </motion.div>
+
+                {/* Why Choose Us */}
+                <motion.div 
+                    variants={fadeIn}
+                    className="mb-24"
+                >
+                    <div className="text-center mb-16">
+                        <Title text1="WHY" text2="CHOOSE US" />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {/* Quality Card */}
+                        <motion.div 
+                            whileHover={{ y: -10 }}
+                            className="p-8 rounded-xl bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-800/30 transition-all duration-300"
+                        >
+                            <Award className="w-12 h-12 mb-6 text-indigo-600 dark:text-indigo-400" />
+                            <h3 className="text-xl font-semibold mb-4 dark:text-white">
+                                Quality Assurance
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-400">
+                                Every garment undergoes rigorous quality checks. We partner with certified 
+                                manufacturers to ensure premium craftsmanship in every stitch.
+                            </p>
+                        </motion.div>
+
+                        {/* Convenience Card */}
+                        <motion.div 
+                            whileHover={{ y: -10 }}
+                            className="p-8 rounded-xl bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-800/30 transition-all duration-300"
+                        >
+                            <ShoppingCart className="w-12 h-12 mb-6 text-indigo-600 dark:text-indigo-400" />
+                            <h3 className="text-xl font-semibold mb-4 dark:text-white">
+                                Seamless Experience
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-400">
+                                Enjoy hassle-free shopping with our intuitive platform, fast shipping, 
+                                and flexible returns. Your convenience is our priority.
+                            </p>
+                        </motion.div>
+
+                        {/* Service Card */}
+                        <motion.div 
+                            whileHover={{ y: -10 }}
+                            className="p-8 rounded-xl bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-800/30 transition-all duration-300"
+                        >
+                            <Headphones className="w-12 h-12 mb-6 text-indigo-600 dark:text-indigo-400" />
+                            <h3 className="text-xl font-semibold mb-4 dark:text-white">
+                                Dedicated Support
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-400">
+                                24/7 customer care with fashion experts. Virtual styling consultations 
+                                and personalized recommendations available.
+                            </p>
+                        </motion.div>
+                    </div>
+                </motion.div>
+
+                {/* Newsletter */}
+                <motion.div 
+                    variants={fadeIn}
+                    className="mb-16"
+                >
+                    <NewsLetterBox />
+                </motion.div>
+            </motion.div>
         </div>
     )
 }

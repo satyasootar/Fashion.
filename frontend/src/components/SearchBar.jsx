@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
-import { assets } from '../assets/assets';
+import { X, Search } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 
 const SearchBar = () => {
     const { search, setSearch, showSearch, setShowSearch } = useContext(ShopContext);
     const location = useLocation()
     const [visible, setVisible] = useState()
-  
 
     useEffect(() => {
         if (location.pathname == "/collection") {
@@ -16,13 +15,26 @@ const SearchBar = () => {
             setVisible(false)
         }
     }, [location])
+
     return showSearch && visible ? (
-        <div className='border-t  bg-gray-50 text-center' >
-            <div className='inline-flex items-center justify-center border border-gray-400 px-5 py-2 my-5 mx-3 rounded-full w-3/4 sm:w-1/2' >
-                <input value={search} onChange={(e) => setSearch(e.target.value)} className='flex-1 outline-none bg-inherit text-sm' type='text' placeholder='search' />
-                <img className='w-4' src={assets.search_icon} />
+        <div className='border-t bg-gray-50 dark:bg-gray-900/95 backdrop-blur-sm text-center'>
+            <div className='inline-flex items-center justify-center border border-gray-300 dark:border-gray-700 px-5 py-3 my-4 mx-3 rounded-full w-3/4 sm:w-1/2 
+              hover:border-gray-400 dark:hover:border-gray-600'>
+                <input
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className='flex-1 outline-none bg-inherit text-sm text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 
+                      focus:placeholder-transparent pr-2'
+                    type='text'
+                    placeholder='Search products...'
+                />
+                <Search className='w-4 h-4 text-gray-500 dark:text-gray-400' />
             </div>
-            <img onClick={() => setShowSearch(false)} className='inline w-3 cursor-pointer' src={assets.cross_icon} alt="" />
+            <X
+                onClick={() => setShowSearch(false)}
+                className='inline w-4 h-4 ml-2 cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100 transition-colors'
+                strokeWidth={2.5}
+            />
         </div>
     ) : null
 }

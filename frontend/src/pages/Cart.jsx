@@ -1,16 +1,14 @@
-import { useContext, useEffect, useState } from "react"
-import { ShopContext } from "../context/ShopContext"
-import Title from '../components/Title'
-import { assets } from "../assets/assets"
-import CartTotal from "../components/CartTotal"
+import { useContext, useEffect, useState } from "react";
+import { ShopContext } from "../context/ShopContext";
+import Title from '../components/Title';
+import { assets } from "../assets/assets";
+import CartTotal from "../components/CartTotal";
 
 const Cart = () => {
-    const { products, cartItems, currency, updateQuantity, navigate } = useContext(ShopContext)
-    const [cartData, setCartData] = useState([])
-
+    const { products, cartItems, currency, updateQuantity, navigate } = useContext(ShopContext);
+    const [cartData, setCartData] = useState([]);
 
     useEffect(() => {
-
         const tempData = [];
 
         if (products.length > 0) {
@@ -21,57 +19,87 @@ const Cart = () => {
                             _id: itemId,
                             size: size,
                             quantity: cartItems[itemId][size]
-                        })
+                        });
                     }
                 }
             }
-            setCartData(tempData)
+            setCartData(tempData);
         }
+    }, [cartItems, products]);
 
-    }, [cartItems, products])
     return (
-        <div className="border-t pt-14" >
-            <div className="text-2xl mb-3" >
+        <div className="border-t pt-14 px-4 sm:px-10 bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300">
+            <div className="text-3xl font-semibold mb-6 text-gray-800 dark:text-white">
                 <Title text1={"YOUR"} text2={" CART"} />
             </div>
-            <div>
+
+            <div className="space-y-6">
                 {
                     cartData.map((item, index) => {
                         const productData = products.find((product) => product._id === item._id);
 
                         return (
-                            <div key={index} className="py-4 border-t border-b text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_2fr_0.5fr] items-center gap-4" >
-                                <div className="flex items-start gap-6" >
-                                    <img className="w-16 sm:w-20" src={productData.image[0]} alt="" />
-                                    <div>
-                                        <p className="text-xs sm:text-lg font-medium" >{productData.name}</p>
-                                        <div className="flex items-center gap-5 mt-2">
-                                            <p>
+                            <div key={index} className="animate-fadeIn border-t border-b py-6 px-2 sm:px-4 rounded-lg dark:border-gray-700 grid grid-cols-[4fr_1fr_auto] sm:grid-cols-[4fr_1fr_auto] items-center gap-4 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
+                                <div className="flex items-start gap-4 sm:gap-6">
+                                    <img
+                                        className="w-16 sm:w-20 rounded-lg transition-transform duration-300 hover:scale-105"
+                                        src={productData.image[0]}
+                                        alt={productData.name}
+                                    />
+                                    <div className="flex flex-col gap-2">
+                                        <p className="text-sm sm:text-lg font-medium text-gray-800 dark:text-white">
+                                            {productData.name}
+                                        </p>
+                                        <div className="flex items-center gap-4 text-gray-700 dark:text-gray-300">
+                                            <p className="text-sm sm:text-base">
                                                 {currency}{productData.price}
                                             </p>
-                                            <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50" >
+                                            <span className="px-2 sm:px-3 py-1 border rounded-md bg-gray-100 dark:bg-gray-700 text-xs sm:text-sm">
                                                 {item.size}
-                                            </p>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
-                                <input onChange={(e) => e.target.value === '' || e.target.value === '0' ? null : updateQuantity(item._id, item.size, Number(e.target.value))} className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1" type="number" min={1} defaultValue={item.quantity} />
-                                <img onClick={() => updateQuantity(item._id, item.size, 0)} className="w-4 m-4 sm:w-5 cursor-pointer" src={assets.bin_icon} alt="" />
+
+                                <input
+                                    onChange={(e) =>
+                                        e.target.value === '' || e.target.value === '0'
+                                            ? null
+                                            : updateQuantity(item._id, item.size, Number(e.target.value))
+                                    }
+                                    className="border rounded-md w-full max-w-14 sm:max-w-20 text-center px-2 py-1 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+                                    type="number"
+                                    min={1}
+                                    defaultValue={item.quantity}
+                                />
+
+                                <img
+                                    onClick={() => updateQuantity(item._id, item.size, 0)}
+                                    className="w-5 sm:w-6 cursor-pointer hover:scale-110 transition-transform duration-300"
+                                    src={assets.bin_icon}
+                                    alt="Delete"
+                                />
                             </div>
-                        )
-                    }, [])
+                        );
+                    })
                 }
             </div>
-            <div className="flex justify-end my-20" >
-                <div className="w-full sm:w-[450px]" >
+
+            <div className="flex justify-end mt-20 mb-10">
+                <div className="w-full sm:w-[450px] space-y-4 dark:text-white" >
                     <CartTotal />
-                    <div className="w-full text-end" >
-                        <button onClick={() => navigate('/placeOrder')} className="bg-black my-4 px-8 py-3 text-white text-sm border cursor-pointer hover:text-black hover:bg-white hover:border-1" >PROCEED TO CHECKOUT</button>
+                    <div className="text-end">
+                        <button
+                            onClick={() => navigate('/placeOrder')}
+                            className="bg-black text-white dark:bg-white dark:text-black px-8 py-3 text-sm font-medium rounded-lg border border-transparent hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white hover:border-black transition-all duration-300"
+                        >
+                            PROCEED TO CHECKOUT
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Cart
+export default Cart;
